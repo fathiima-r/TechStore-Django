@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account - TechStore</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .navbar {
+            height: 64px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar nav a {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .navbar nav a:hover {
+            color: #0071e3;
+        }
+
+
+        .profile-section {
+            width: 86%;
+            max-width: 1000px;
+            margin: 60px auto 100px;
+        }
+
+        .page-title {
+            margin-bottom: 35px;
+        }
+
+        .page-title h1 {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #666;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+        }
+
+        .profile-menu,
+        .profile-card {
+            background: white;
+            border-radius: 22px;
+            padding: 30px;
+        }
+
+        .profile-menu h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            display: block;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .menu-item.active {
+            background: #eef6ff;
+            color: #0071e3;
+            font-weight: 600;
+        }
+
+        .menu-item.logout {
+            color: #d32f2f;
+        }
+
+        .menu-item:hover {
+            background: #f5f5f7;
+        }
+
+
+        .profile-card h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .info-box {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .info-box label {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-box p {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .account-message {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f7;
+            border-radius: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+
+        .orders-section {
+            margin-top: 35px;
+        }
+
+        .orders-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+       .order-card {
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+}
+
+        .order-info h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .order-info p {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .order-details {
+            text-align: right;
+        }
+
+        .order-total {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .order-status {
+            color: #0071e3;
+            font-size: 13px;
+            font-weight: 600;
+        }
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-products {
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.order-products h4 {
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.product-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.product-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.product-meta {
+    font-size: 13px;
+    color: #777;
+}
+
+.product-price {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+}
+        .no-orders {
+            background: #f8f8f8;
+            padding: 25px;
+            border-radius: 15px;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+
+            .order-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .order-details {
+                text-align: left;
+            }
+
+        }
+
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 35px;
+        }
+
+
+        @media (max-width: 750px) {
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                height: auto;
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar nav {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .profile-section {
+                width: 90%;
+                margin-top: 40px;
+            }
+
+            .page-title h1 {
+                font-size: 38px;
+            }
+
+            .profile-menu,
+            .profile-card {
+                padding: 25px;
+            }
+            .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.order-details {
+    text-align: left;
+}
+
+.product-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.product-price {
+    text-align: left;
+}
+        }
+    </style>
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+        TechStore
+    </div>
+
+    <nav>
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'products' %}">
+            Products
+        </a>
+
+        <a href="{% url 'profile' %}">
+            My Account
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<main class="profile-section">
+
+    <div class="page-title">
+
+        <h1>
+            My Account
+        </h1>
+
+        <p>
+            Manage your TechStore account.
+        </p>
+
+    </div>
+
+
+    <div class="profile-grid">
+
+  
+
+        <aside class="profile-menu">
+
+            <h3>
+                Account
+            </h3>
+
+            <a href="{% url 'profile' %}" class="menu-item active">
+                Profile
+            </a>
+
+            <a href="{% url 'products' %}" class="menu-item">
+                Browse Products
+            </a>
+
+            <a href="{% url 'logout' %}" class="menu-item logout">
+                Logout
+            </a>
+
+        </aside>
+
+        <section class="profile-card">
+
+            <h2>
+                Account Information
+            </h2>
+
+
+            <div class="profile-info">
+
+                <div class="info-box">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <p>
+                        {{ user.username }}
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <p>
+                        {% if user.email %}
+                            {{ user.email }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <label>
+                        First Name
+                    </label>
+
+                    <p>
+                        {% if user.first_name %}
+                            {{ user.first_name }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <label>
+                        Last Name
+                    </label>
+
+                    <p>
+                        {% if user.last_name %}
+                            {{ user.last_name }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="account-message">
+
+                Your account is ready to use.
+                Browse our products and explore the latest
+                technology available on TechStore.
+
+            </div>
+<div class="orders-section">
+     <h2> My Orders </h2>
+      {% if orders %} 
+      {% for order in orders %} 
+      <div class="order-card"> 
+        <div class="order-header"> 
+            <div class="order-info">
+                 <h3> Order #{{ forloop.counter }} </h3>
+                  <p> {{ order.created_at|date:"d M Y, h:i A" }} </p> 
+                </div> <div class="order-details">
+                     <div class="order-total"> ₹{{ order.total_amount }} </div>
+                      <div class="order-status"> {{ order.status }} </div> 
+                    </div> </div> 
+                    <div class="order-products"> 
+                        <h4> Products Purchased </h4> 
+                        {% for item in order.items.all %}
+                         <div class="product-row"> <div> 
+                            <p class="product-name"> {{ item.product.name }} </p>
+                             <p class="product-meta"> Quantity: {{ item.quantity }} </p>
+                             </div> <div class="product-price"> ₹{{ item.price }} </div>
+                             </div> {% empty %} <p class="no-orders"> Product details are not available. </p>
+                              {% endfor %} 
+                            </div> 
+                            </div> {% endfor %} {% else %} 
+                            <div class="no-orders"> You haven't placed any orders yet. </div> 
+                            {% endif %} 
+                        </div>
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 TechStore. All rights reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

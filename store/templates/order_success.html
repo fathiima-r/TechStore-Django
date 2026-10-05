@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmed - TechStore</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+
+        .navbar {
+            height: 64px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar nav a {
+            text-decoration: none;
+            color: #444;
+            font-size: 14px;
+        }
+
+        .success-container {
+            width: 90%;
+            max-width: 650px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 35px;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .order-number {
+            background: #f5f5f7;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .order-number strong {
+            display: block;
+            margin-top: 5px;
+            font-size: 20px;
+        }
+
+        .total {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #0071e3;
+            color: white;
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .button:hover {
+            background: #005bb5;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 35px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+        TechStore
+    </div>
+
+    <nav>
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'products' %}">
+            Products
+        </a>
+
+        <a href="{% url 'profile' %}">
+            My Account
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="success-container">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h1>
+            Order Confirmed!
+        </h1>
+
+        <p class="message">
+            Thank you for your order.
+            Your order has been successfully placed.
+        </p>
+
+
+        <div class="order-number">
+
+            <span>
+                Order Number
+            </span>
+
+            <strong>
+                #{{ order.id }}
+            </strong>
+
+        </div>
+
+
+        <p class="total">
+
+            Total Amount:
+            <strong>
+                ₹{{ order.total_amount }}
+            </strong>
+
+        </p>
+
+
+        <a  href="{% url 'products' %}" class="button">
+            Continue Shopping
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 TechStore. All rights reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

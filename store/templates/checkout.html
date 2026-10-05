@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout - TechStore</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .navbar {
+            height: 64px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .navbar nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar nav a {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .navbar nav a:hover {
+            color: #0071e3;
+        }
+
+        .checkout-page {
+            width: 86%;
+            max-width: 1100px;
+            margin: 60px auto 100px;
+        }
+
+        .page-title {
+            margin-bottom: 35px;
+        }
+
+        .page-title h1 {
+            font-size: 48px;
+        }
+
+        .page-title p {
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .checkout-card,
+        .order-summary {
+            background: white;
+            border-radius: 22px;
+            padding: 30px;
+        }
+
+        .checkout-card h2,
+        .order-summary h2 {
+            margin-bottom: 25px;
+        }
+
+        .user-info {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .user-info p {
+            margin-bottom: 5px;
+        }
+
+        .user-info strong {
+            font-size: 14px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 600;
+        }
+
+        .item-quantity {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .item-price {
+            font-weight: 600;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .place-order {
+            width: 100%;
+            border: none;
+            background: #0071e3;
+            color: white;
+            padding: 14px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+
+        .place-order:hover {
+            background: #005bb5;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            color: #0071e3;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 35px;
+        }
+
+        @media (max-width: 800px) {
+
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                height: auto;
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar nav {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .checkout-page {
+                width: 90%;
+                margin-top: 40px;
+            }
+
+            .page-title h1 {
+                font-size: 38px;
+            }
+
+            .checkout-card,
+            .order-summary {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+        TechStore
+    </div>
+
+    <nav>
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'products' %}">
+            Products
+        </a>
+
+        <a href="{% url 'cart' %}">
+            Cart
+        </a>
+
+        <a href="{% url 'profile' %}">
+            My Account
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="checkout-page">
+
+
+    <div class="page-title">
+
+        <h1>
+            Checkout
+        </h1>
+
+        <p>
+            Review your order before placing it.
+        </p>
+
+    </div>
+
+
+    <div class="checkout-layout">
+
+
+
+        <section class="checkout-card">
+
+            <h2>
+                Customer Information
+            </h2>
+
+
+            <div class="user-info">
+
+                <p>
+                    <strong>Username:</strong>
+                    {{ user.username }}
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+
+                    {% if user.email %}
+                        {{ user.email }}
+                    {% else %}
+                        Not provided
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+
+            <h2>
+                Your Items
+            </h2>
+
+
+            {% for item in cart_products %}
+
+                <div class="order-item">
+
+                    <div>
+
+                        <div class="item-name">
+                            {{ item.product.name }}
+                        </div>
+
+                        <div class="item-quantity">
+                            Quantity: {{ item.quantity }}
+                        </div>
+
+                    </div>
+
+                    <div class="item-price">
+                        ₹{{ item.item_total }}
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+        <aside class="order-summary">
+
+            <h2>
+                Order Summary
+            </h2>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span>
+                    ₹{{ total }}
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Delivery
+                </span>
+
+                <span>
+                    Free
+                </span>
+
+            </div>
+
+
+            <div class="summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <span>
+                    ₹{{ total }}
+                </span>
+
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button type="submit" class="place-order">
+                    Place Order
+                </button>
+
+            </form>
+
+
+            <a href="{% url 'cart' %}" class="back-link">
+                ← Back to Cart
+            </a>
+
+        </aside>
+
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 TechStore. All rights reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
